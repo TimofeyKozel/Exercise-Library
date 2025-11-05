@@ -23,7 +23,14 @@ public class ExercisesClient
             Exercise = "ein Project fertig machen",
             Genre = "Else",
             Till = new DateOnly(2025, 11, 23)
+        },
+        new(){
+            Id = 5,
+            Exercise = "gitHub joy",
+            Genre = "Else",
+            Till = new DateOnly(2025, 11, 23)
         }
+                
     ];
 
     private readonly Genre[] genres = new GenresClient().GetGenres();
