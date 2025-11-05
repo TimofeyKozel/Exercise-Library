@@ -1,0 +1,87 @@
+﻿@page "/editexercise"
+@page "/editexercise/{id:int}"
+@inject NavigationManager NavigationManager
+@inject ExercisesClient ExercisesClient
+@inject GenresClient GenresClient
+
+<PageTitle>New exercise</PageTitle>
+<h3>New exercise</h3>
+
+@if(genres is null || exercise is null){
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@exercise" FormName="editExercise" OnValidSubmit ="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label for="exercise" class="form-label">Exercise:</label>
+                <InputText id="exercise" @bind-Value="exercise.Exercise" class="form-control"/>
+                <ValidationMessage For="() => exercise.Exercise" />
+            </div>
+                <div class="mb-3">
+                <label for="genre" class="form-label">Type:</label>
+                <InputSelect id="genre" @bind-Value="exercise.GenreId" class="form-select">
+                <option value="">Select a type</option>
+                @foreach(var genre in genres)
+                {
+                    <option value="@genre.Id">@genre.Exercise</option>
+                }
+                </InputSelect>
+                <ValidationMessage For="() => exercise.GenreId" />
+            </div>
+                <div class="mb-3">
+                <label for="till" class="form-label">Till:</label>
+                <InputDate id="till" @bind-Value="exercise.Till" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a role="button" class="btn btn-secondary" href="/">Cancel</a>
+        </EditForm>
+    </div>
+</div>
+}
+
+@code
+{
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if(exercise is not null)
+        {
+            return;
+        }
+        if(Id is not null)
+        {
+            exercise = ExercisesClient.GetExercise(Id.Value);
+        }
+        else
+        {
+                exercise = new()
+            {
+                Exercise = string.Empty,
+                Till = DateOnly.FromDateTime(DateTime.UtcNow)
+            };
+        }
+    }
+
+    [SupplyParameterFromForm]
+    private ExerciseDetails? exercise{ get; set;}
+
+    private Genre[]? genres;
+
+    protected override void OnInitialized()
+    {
+        genres = GenresClient.GetGenres();
+    }
+
+    private async Task HandleSubmit()
+    {
+        ArgumentNullException.ThrowIfNull(exercise);
+        ExercisesClient.AddExercise(exercise);
+        NavigationManager.NavigateTo("/");
+    }
+}

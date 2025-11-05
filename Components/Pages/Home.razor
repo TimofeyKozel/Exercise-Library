@@ -1,0 +1,51 @@
+﻿@page "/"
+@inject ExercisesClient Client
+
+<PageTitle>Exercise manager</PageTitle>
+
+<div class="mt-2">
+    <a class="btn btn-primary" role="button" href="/editexercise">New Exercise</a>
+</div>
+
+@if(exercises is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class = "table table-striped table-bordered table-hover mt-5">
+        <thead class="table-dark">
+            <th>Id</th>
+            <th>Exercise</th>
+            <th>Genre</th>
+            <th>Till date</th>
+            <th>Done date</th>
+            <th>
+            </th>
+        </thead>
+        <tbody>
+            @foreach(var exercise in exercises)
+            {
+                <tr>
+                <td>@exercise.Id</td>
+                <td>@exercise.Exercise</td>
+                <td>@exercise.Genre</td>
+                <td>@exercise.Till</td>
+                <td>
+                
+                </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code{
+
+    private ExerciseSummary[]? exercises; 
+
+    protected override void OnInitialized()
+    {
+        exercises = Client.GetExercises;
+    } 
+}
