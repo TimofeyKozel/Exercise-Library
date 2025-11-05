@@ -25,7 +25,7 @@ public class ExercisesClient
             Till = new DateOnly(2025, 11, 23)
         },
         new(){
-            Id = 5,
+            Id = 4,
             Exercise = "gitHub joy",
             Genre = "Else",
             Till = new DateOnly(2025, 11, 23)
