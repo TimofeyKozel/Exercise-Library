@@ -1,17 +1,18 @@
 ﻿@page "/editexercise"
 @page "/editexercise/{id:int}"
+@rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject ExercisesClient ExercisesClient
 @inject GenresClient GenresClient
 
-<PageTitle>New exercise</PageTitle>
-<h3>New exercise</h3>
+<PageTitle>@title</PageTitle>
+<h3>@title</h3>
 
 @if(genres is null || exercise is null){
     <p><em>Loading...</em></p>
 }
 else
-{
+{  
 <div class="row">
     <div class="col-md-4">
         <EditForm Model="@exercise" FormName="editExercise" OnValidSubmit ="HandleSubmit">
@@ -47,6 +48,9 @@ else
 {
     [Parameter]
     public int? Id { get; set; }
+    private Genre[]? genres;
+
+    private string title = string.Empty;
 
     protected override void OnParametersSet()
     {
@@ -57,6 +61,7 @@ else
         if(Id is not null)
         {
             exercise = ExercisesClient.GetExercise(Id.Value);
+            title = "Edit exercise " + "\"" + exercise.Exercise + "\"";
         }
         else
         {
@@ -65,13 +70,12 @@ else
                 Exercise = string.Empty,
                 Till = DateOnly.FromDateTime(DateTime.UtcNow)
             };
+            title = "New exercise";
         }
     }
 
     [SupplyParameterFromForm]
     private ExerciseDetails? exercise{ get; set;}
-
-    private Genre[]? genres;
 
     protected override void OnInitialized()
     {
@@ -81,7 +85,16 @@ else
     private void HandleSubmit()
     {
         ArgumentNullException.ThrowIfNull(exercise);
-        ExercisesClient.AddExercise(exercise);
+
+        if(Id is null)
+        {
+            ExercisesClient.AddExercise(exercise);
+        }
+        else
+        {
+            exercise.Id = Id.Value;
+            ExercisesClient.UpdateExercise(exercise);
+        }
         NavigationManager.NavigateTo("/");
     }
 }

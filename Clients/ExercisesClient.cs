@@ -39,8 +39,7 @@ public class ExercisesClient
 
     public void AddExercise(ExerciseDetails exercise)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(exercise.GenreId);
-        var genre = genres.Single(genre => genre.Id == int.Parse(exercise.GenreId));
+        Genre genre = GetGenreById(exercise.GenreId);
 
         var exerciseSummary = new ExerciseSummary
         {
@@ -52,10 +51,10 @@ public class ExercisesClient
 
         exercises.Add(exerciseSummary);
     }
+
     public ExerciseDetails GetExercise(int id)
     {
-        ExerciseSummary? exercise = exercises.Find(exercise => exercise.Id == id);
-        ArgumentNullException.ThrowIfNull(exercise);
+        ExerciseSummary exercise = GetExerciseSummaryById(id);
 
         var genre = genres.Single(genre => string.Equals(
             genre.Exercise,
@@ -69,5 +68,34 @@ public class ExercisesClient
             GenreId = genre.Id.ToString(),
             Till = exercise.Till
         };
+    }
+
+    public void UpdateExercise(ExerciseDetails updateExercise)
+    {
+        var genre = GetGenreById(updateExercise.GenreId);
+        ExerciseSummary existingExercise = GetExerciseSummaryById(updateExercise.Id);
+
+        existingExercise.Exercise = updateExercise.Exercise;
+        existingExercise.Genre = genre.Exercise;
+        existingExercise.Till = updateExercise.Till;
+    }
+
+    public void DeleteExercise(int id)
+    {
+        var exercise = GetExerciseSummaryById(id);
+        exercises.Remove(exercise);
+    }
+
+    private ExerciseSummary GetExerciseSummaryById(int id)
+    {
+        ExerciseSummary? exercise = exercises.Find(exercise => exercise.Id == id);
+        ArgumentNullException.ThrowIfNull(exercise);
+        return exercise;
+    }
+
+    private Genre GetGenreById(string? id)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        return genres.Single(genre => genre.Id == int.Parse(id));
     }
 }

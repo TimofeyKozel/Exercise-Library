@@ -27,13 +27,26 @@ else
             @foreach(var exercise in exercises)
             {
                 <tr>
-                <td>@exercise.Id</td>
-                <td>@exercise.Exercise</td>
-                <td>@exercise.Genre</td>
-                <td>@exercise.Till</td>
-                <td>
-                
-                </td>
+                    <td>@exercise.Id</td>
+                    <td>@exercise.Exercise</td>
+                    <td>@exercise.Genre</td>
+                    <td>@exercise.Till</td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <div class="d-flex">
+                            <a class="btn btn-primary me-2" role="button" href="@ExerciseUrl(exercise.Id)">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <button class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="@GetDeleteModalId(exercise)">
+                                <i class="bi bi-x-square"></i>
+                            </button>
+                        </div>
+                        <DeleteExercise Exercise="@exercise" />
+                    </td>
                 </tr>
             }
         </tbody>
@@ -48,4 +61,11 @@ else
     {
         exercises = Client.GetExercises;
     } 
+
+    private static string ExerciseUrl(int id) => $"/editexercise/{id}";
+
+    private string GetDeleteModalId(ExerciseSummary exercise)
+    {
+        return $"#{DeleteExercise.GetModalId(exercise)}";
+    }
 }

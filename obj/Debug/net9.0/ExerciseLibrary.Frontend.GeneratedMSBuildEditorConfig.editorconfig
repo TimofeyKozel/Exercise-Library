@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[c:/Users/Kozel/Ms Visual Studio Code/Projects/ExerciseLibrary/ExerciseLibrary.Frontend/Components/Pages/DeleteExercise.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEZWxldGVFeGVyY2lzZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [c:/Users/Kozel/Ms Visual Studio Code/Projects/ExerciseLibrary/ExerciseLibrary.Frontend/Components/Pages/EditExercises.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFZGl0RXhlcmNpc2VzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
