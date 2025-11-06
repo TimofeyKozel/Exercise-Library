@@ -78,7 +78,7 @@ else
         genres = GenresClient.GetGenres();
     }
 
-    private async Task HandleSubmit()
+    private void HandleSubmit()
     {
         ArgumentNullException.ThrowIfNull(exercise);
         ExercisesClient.AddExercise(exercise);

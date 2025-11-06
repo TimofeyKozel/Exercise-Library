@@ -31,3 +31,4 @@ c:\Users\Kozel\Ms Visual Studio Code\Projects\ExerciseLibrary\ExerciseLibrary.Fr
 c:\Users\Kozel\Ms Visual Studio Code\Projects\ExerciseLibrary\ExerciseLibrary.Frontend\obj\Debug\net9.0\ExerciseLibrary.Frontend.pdb
 c:\Users\Kozel\Ms Visual Studio Code\Projects\ExerciseLibrary\ExerciseLibrary.Frontend\obj\Debug\net9.0\ExerciseLibrary.Frontend.genruntimeconfig.cache
 c:\Users\Kozel\Ms Visual Studio Code\Projects\ExerciseLibrary\ExerciseLibrary.Frontend\obj\Debug\net9.0\ref\ExerciseLibrary.Frontend.dll
+C:\Users\Kozel\Ms Visual Studio Code\Projects\ExerciseLibrary\ExerciseLibrary.Frontend\obj\Debug\net9.0\ExerciseLibrary.Frontend.sourcelink.json
