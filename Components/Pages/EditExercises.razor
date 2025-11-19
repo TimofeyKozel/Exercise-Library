@@ -15,7 +15,7 @@ else
 {  
 <div class="row">
     <div class="col-md-4">
-        <EditForm Model="@exercise" FormName="editExercise" OnValidSubmit ="HandleSubmit">
+        <EditForm Model="@exercise" FormName="editExercise" OnValidSubmit ="HandleSubmitAsync">
             <DataAnnotationsValidator />
             <div class="mb-3">
                 <label for="exercise" class="form-label">Exercise:</label>
@@ -52,15 +52,16 @@ else
 
     private string title = string.Empty;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         if(exercise is not null)
         {
             return;
         }
+        
         if(Id is not null)
         {
-            exercise = ExercisesClient.GetExercise(Id.Value);
+            exercise = await ExercisesClient.GetExerciseAsync(Id.Value);
             title = "Edit exercise " + "\"" + exercise.Exercise + "\"";
         }
         else
@@ -77,23 +78,23 @@ else
     [SupplyParameterFromForm]
     private ExerciseDetails? exercise{ get; set;}
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        genres = GenresClient.GetGenres();
+        genres = await GenresClient.GetGenresAsync();
     }
 
-    private void HandleSubmit()
+    private async Task HandleSubmitAsync()
     {
         ArgumentNullException.ThrowIfNull(exercise);
 
         if(Id is null)
         {
-            ExercisesClient.AddExercise(exercise);
+            await ExercisesClient.AddExerciseAsync(exercise);
         }
         else
         {
             exercise.Id = Id.Value;
-            ExercisesClient.UpdateExercise(exercise);
+            await ExercisesClient.UpdateExerciseAsync(exercise);
         }
         NavigationManager.NavigateTo("/");
     }

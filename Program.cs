@@ -6,8 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
-builder.Services.AddSingleton<ExercisesClient>();
-builder.Services.AddSingleton<GenresClient>();
+
+var exerciseLibraryApiUrl = builder.Configuration["ExerciseLibraryApiUrl"] ?? 
+    throw new Exception("ExerciseLibraryApiUrl is not set");
+
+builder.Services.AddHttpClient<ExercisesClient>(
+    client => client.BaseAddress = new Uri(exerciseLibraryApiUrl));
+
+builder.Services.AddHttpClient<GenresClient>(
+    client => client.BaseAddress = new Uri(exerciseLibraryApiUrl));
 
 var app = builder.Build();
 
@@ -18,7 +25,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 app.UseAntiforgery();
 

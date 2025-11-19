@@ -57,9 +57,9 @@ else
 
     private ExerciseSummary[]? exercises; 
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        exercises = Client.GetExercises;
+        exercises = await Client.GetExercisesAsync();
     } 
 
     private static string ExerciseUrl(int id) => $"/editexercise/{id}";
