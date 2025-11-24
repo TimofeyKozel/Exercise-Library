@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ExerciseLibrary.Frontend.Models;
 
@@ -11,7 +12,8 @@ public class ExerciseDetails
     public required string Exercise { get; set; }
     
     [Required(ErrorMessage = "The Genre field is required.")]
-    public string? GenreId { get; set; }
+    
+    public int? GenreId { get; set; }
 
     public DateOnly Till { get; set; }
 }
